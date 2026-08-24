@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Académico COAR Tacna | coartacnaD</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #ffcc00;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            /* Personalización Dinámica Avanzada */
+            --card-radius: 12px;
+            --card-border-style: solid;
+            --card-border-color: #e2e8f0;
+            --card-border-width: 1px;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --card-opacity: 1;
+            --card-glass: blur(0px);
+            --site-bg-color: #f8fafc;
+            --site-bg-image: none;
+            --header-bg-color: #003366;
+            --header-text-color: #ffffff;
+            --font-family-site: 'Poppins', sans-serif;
+            --font-size-base: 16px;
+            --line-height-base: 1.7;
+            --animation-speed: 0.3s;
+            --accent-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family-site);
+            transition: background-color var(--animation-speed) ease, border-color var(--animation-speed) ease, color var(--animation-speed) ease;
+        }
+
+        body {
+            background-color: var(--site-bg-color);
+            background-image: var(--site-bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--text-main);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            padding-bottom: 80px;
+        }
+
+        /* --- Dominio --- */
+        #browser-bar {
+            background-color: #1e293b;
+            color: #94a3b8;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .domain-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .domain-badge {
+            background-color: #334155;
+            color: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .domain-badge i { color: var(--success-color); }
+
+        /* --- Panel de Control de Administrador --- */
+        #admin-bar {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+        }
+
+        .status-badge.active {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px var(--success-color);
+        }
+
+        .btn-admin {
+            background-color: var(--accent-color);
+            border: none;
+            color: #000;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all var(--animation-speed) ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+        }
+
+        .btn-admin:hover { transform: translateY(-2px); filter: brightness(1.08); }
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-secondary { background-color: #3b82f6; color: white; }
+
+        /* --- Barra de Controles de Administración --- */
+        #editor-controls {
+            display: none;
+            background-color: #1e293b;
+            padding: 12px 24px;
+            border-bottom: 1px solid #334155;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .editor-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #0f172a;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .editor-group-title {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        /* --- Visitas --- */
+        .visit-counter {
+            background: #0284c7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- Modos de Edición Visual --- */
+        body.editable-mode [contenteditable="true"] {
+            outline: 2px dashed var(--secondary-color);
+            outline-offset: 4px;
+        }
+
+        body.editable-mode .section-actions,
+        body.editable-mode .free-item-controls {
+            display: flex !important;
+        }
+
+        .free-canvas {
+            position: relative;
+            min-height: 250px;
+            margin-top: 1rem;
+            transition: all var(--animation-speed) ease;
+        }
+
+        body.editable-mode .free-canvas {
+            min-height: 400px;
+            background-color: rgba(0, 85, 165, 0.03);
+            border: 2px dashed var(--secondary-color);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        /* --- Elementos Ubicados de Forma Libre / Grid --- */
+        .free-item {
+            position: absolute;
+            background: var(--card-bg);
+            border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            opacity: var(--card-opacity);
+            backdrop-filter: var(--card-glass);
+            padding: 1.2rem;
+            min-width: 180px;
+            user-select: none;
+            transition: transform var(--animation-speed) ease, box-shadow var(--animation-speed) ease, opacity var(--animation-speed) ease;
+        }
+
+        .free-item:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        body.editable-mode .free-item {
+            cursor: grab;
+        }
+
+        body.editable-mode .free-item:active {
+            cursor: grabbing;
+        }
+
+        body.editable-mode .free-item:hover {
+            outline: 2px solid var(--accent-color);
+        }
+
+        /* Estilo para Texto Estático Bloqueado */
+        .free-item.static-text-item {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            padding: 0.5rem;
+        }
+
+        body.editable-mode .free-item.static-text-item {
+            border: 1px dashed #94a3b8 !important;
+            background: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .static-text-content {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .free-item-controls {
+            display: none;
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: #1e293b;
+            padding: 3px;
+            border-radius: 20px;
+            gap: 4px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .free-item-controls button {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .free-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: calc(var(--card-radius) - 4px);
+            pointer-events: none;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* Reproductor Avanzado e Interactivo de Audio */
+        .custom-audio-player {
+            background: var(--light-bg);
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-width: 260px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .audio-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .audio-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-audio-ctrl {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+
+        .btn-audio-ctrl:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .btn-audio-ctrl.play-btn {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-color);
+            color: #000;
+            font-size: 1rem;
+        }
+
+        .audio-progress-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .audio-progress-bar {
+            flex-grow: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e2e8f0;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .audio-progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Formas Geométricas Dinámicas */
+        .shape-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape-rectangle {
+            width: 100%;
+            height: 80px;
+            background: var(--secondary-color);
+            border-radius: 6px;
+        }
+
+        .shape-circle {
+            width: 90px;
+            height: 90px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .shape-triangle {
+            width: 0;
+            height: 0;
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 80px solid var(--primary-color);
+        }
+
+        .section-actions {
+            display: none;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #cbd5e1;
+            flex-wrap: wrap;
+        }
+
+        /* --- Paginación --- */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            margin: 1.5rem 0;
+            border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: var(--secondary-color);
+        }
+
+        .page-btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        /* --- Estructura Principal --- */
+        header {
+            background: var(--header-bg-color);
+            color: var(--header-text-color);
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-block {
+            background: var(--card-bg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow);
+            border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+            transition: all var(--animation-speed) ease;
+            position: relative;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Sección de Comentarios --- */
+        .comments-wrapper {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--card-radius);
+            border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+            box-shadow: var(--card-shadow);
+            margin-top: 3rem;
+        }
+
+        .warning-box {
+            background: #fffbebf8;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-size: 0.88rem;
+            color: #92400e;
+        }
+
+        .comment-item {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .comment-media {
+            max-width: 250px;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        /* --- Modales --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-section-title {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .welcome-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .welcome-card-item {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #e0f2fe;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dominio Dinámico -->
+    <div id="browser-bar">
+        <div class="domain-container">
+            <i class="fa-solid fa-globe"></i>
+            <span>Dominio Actual:</span>
+            <div class="domain-badge">
+                <i class="fa-solid fa-lock"></i>
+                <span id="display-domain">https://coartacnad.edu.pe</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <span class="visit-counter"><i class="fa-solid fa-eye"></i> Visitas: <span id="visit-count">0</span></span>
+        </div>
+    </div>
+
+    <!-- Panel de Control del Administrador -->
+    <div id="admin-bar">
+        <div class="admin-info">
+            <span class="status-badge" id="status-indicator"></span>
+            <span id="admin-status-text" style="font-size: 0.9rem;">Modo Lectura (Público)</span>
+        </div>
+        <div>
+            <button class="btn-admin" id="btn-login-modal" onclick="abrirModalAuth()">
+                <i class="fa-solid fa-shield-halved"></i> Acceso Administrador
+            </button>
+            <button class="btn-admin btn-secondary" id="btn-save" onclick="guardarTodo()" style="display: none;">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+            </button>
+            <button class="btn-admin btn-danger" id="btn-logout" onclick="cerrarSesion()" style="display: none;">
+                <i class="fa-solid fa-right-from-bracket"></i> Salir
+            </button>
+        </div>
+    </div>
+
+    <!-- Barra Organizada de Controles para Administración -->
+    <div id="editor-controls">
+        <div class="editor-group">
+            <span class="editor-group-title">Estructura</span>
+            <button class="btn-admin" onclick="crearNuevaSeccion()"><i class="fa-solid fa-plus"></i> Sección</button>
+            <button class="btn-admin" onclick="crearNuevaPagina()"><i class="fa-solid fa-file-circle-plus"></i> Página</button>
+        </div>
+
+        <div class="editor-group">
+            <span class="editor-group-title">Personalización Avanzada</span>
+            <button class="btn-admin btn-secondary" onclick="abrirCentroPersonalizacion()"><i class="fa-solid fa-sliders"></i> Panel de Estilos Completo</button>
+            <button class="btn-admin" onclick="abrirModalDominio()"><i class="fa-solid fa-link"></i> Dominio Web</button>
+        </div>
+
+        <div class="editor-group">
+            <span class="editor-group-title">Sistema</span>
+            <button class="btn-admin btn-danger" onclick="restaurarPorDefecto()"><i class="fa-solid fa-rotate-left"></i> Restablecer</button>
+        </div>
+    </div>
+
+    <header id="site-header">
+        <div class="header-content">
+            <h1 class="editable" id="header-title">Portafolio Académico COAR Tacna</h1>
+            <p class="editable" id="header-subtitle">Espacio educativo oficial de proyectos e investigación</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Paginación Superior -->
+        <div class="pagination-container">
+            <span id="page-info-top">Página 1 de 1</span>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prev-btn-top" onclick="cambiarPagina(-1)"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                <button class="page-btn" id="next-btn-top" onclick="cambiarPagina(1)">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Contenedor Dinámico de Secciones -->
+        <div id="sections-wrapper"></div>
+
+        <!-- Paginación Inferior -->
+        <div class="pagination-container">
+            <span id="page-info-bottom">Página 1 de 1</span>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prev-btn-bottom" onclick="cambiarPagina(-1)"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                <button class="page-btn" id="next-btn-bottom" onclick="cambiarPagina(1)">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Sección de Comentarios -->
+        <div class="comments-wrapper">
+            <h3><i class="fa-solid fa-comments"></i> Preguntas, Mensajes y Fotos de Lectores</h3>
+            
+            <div class="warning-box">
+                <i class="fa-solid fa-triangle-exclamation"></i> <strong>Aviso para la Comunidad:</strong>
+                Por favor, mantén un lenguaje respetuoso. Está estrictamente prohibido enviar textos ofensivos o inadecuados.
+            </div>
+
+            <form onsubmit="publicarComentario(event)" style="margin-bottom: 1.5rem;">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="comm-author" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Mensaje o Pregunta:</label>
+                    <textarea id="comm-text" rows="3" placeholder="Escribe aquí tu comentario..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Adjuntar Foto (Opcional):</label>
+                    <input type="file" id="comm-photo" accept="image/*">
+                </div>
+                <button type="submit" class="btn-admin"><i class="fa-solid fa-paper-plane"></i> Publicar Mensaje</button>
+            </form>
+
+            <div id="comments-list"></div>
+
+            <div class="pagination-container" style="background: #f8fafc; margin-top: 1rem;">
+                <span id="comm-page-info">Comentarios: Página 1 de 1</span>
+                <div class="pagination-controls">
+                    <button class="page-btn" id="comm-prev-btn" onclick="cambiarPaginaComentarios(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="page-btn" id="comm-next-btn" onclick="cambiarPaginaComentarios(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Autenticación -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-box">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                <h3 style="margin-top: 0.5rem;">Panel de Autenticación</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                    Ingresa tus credenciales de administración.
+                </p>
+            </div>
+            <form onsubmit="procesarAutenticacion(event)">
+                <div class="form-group">
+                    <label>Usuario:</label>
+                    <input type="text" id="input-user" placeholder="Ingresa usuario" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="input-pass" placeholder="••••••••" required>
+                </div>
+                <div id="auth-error" style="color: var(--danger-color); font-size: 0.85rem; display: none; text-align: center; margin-bottom: 0.5rem;">
+                    Usuario o contraseña incorrectos.
+                </div>
+                <button type="submit" class="btn-admin" style="width: 100%; justify-content: center;">Iniciar Sesión</button>
+                <button type="button" class="btn-admin" style="width: 100%; justify-content: center; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalAuth()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Bienvenida -->
+    <div class="modal-overlay" id="welcome-modal">
+        <div class="modal-box">
+            <div style="text-align: center;">
+                <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: var(--success-color);"></i>
+                <h2 style="margin-top: 0.5rem; color: var(--primary-color);">¡Bienvenido Administrador!</h2>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Has iniciado sesión correctamente como <strong id="welcome-user-name">nanogout</strong>.</p>
+            </div>
+
+            <div class="welcome-card">
+                <h4 style="color: var(--primary-color); font-size: 0.95rem;"><i class="fa-solid fa-chart-pie"></i> Estado General del Sistema</h4>
+                <div class="welcome-card-grid">
+                    <div class="welcome-card-item"><strong>Páginas Totales:</strong> <span id="welc-pages-count">1</span></div>
+                    <div class="welcome-card-item"><strong>Secciones Totales:</strong> <span id="welc-sections-count">1</span></div>
+                    <div class="welcome-card-item"><strong>Comentarios Totales:</strong> <span id="welc-comments-count">0</span></div>
+                    <div class="welcome-card-item"><strong>Visitas Registradas:</strong> <span id="welc-visits-count">0</span></div>
+                </div>
+            </div>
+
+            <button class="btn-admin" style="width: 100%; margin-top: 1.5rem; justify-content: center;" onclick="cerrarModalBienvenida()">Comenzar a Editar</button>
+        </div>
+    </div>
+
+    <!-- Centro de Personalización Organizado -->
+    <div class="modal-overlay" id="custom-modal">
+        <div class="modal-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3><i class="fa-solid fa-palette"></i> Panel de Personalización General</h3>
+                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="cerrarCentroPersonalizacion()"></i>
+            </div>
+
+            <!-- Categoría 1: Tarjetas y Elementos -->
+            <div class="custom-section-title"><i class="fa-solid fa-box"></i> 1. Estilo de Elementos y Cuadros</div>
+            
+            <div class="form-group">
+                <label>Forma / Redondeo de Esquinas:</label>
+                <select id="select-card-shape" onchange="cambiarFormaCuadros(this.value)">
+                    <option value="12px">Bordes Redondeados (12px)</option>
+                    <option value="0px">Bordes Rectos / Cuadrados (0px)</option>
+                    <option value="25px">Bordes Muy Redondeados (25px)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Estilo del Borde:</label>
+                <select id="select-card-border" onchange="cambiarEstiloBorde(this.value)">
+                    <option value="solid">Línea Sólida</option>
+                    <option value="dashed">Línea Punteada (Dashed)</option>
+                    <option value="dotted">Puntos (Dotted)</option>
+                    <option value="none">Sin Borde</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Grosor del Borde (px):</label>
+                <input type="number" id="input-card-border-width" value="1" min="0" max="10" onchange="cambiarGrosorBorde(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Color del Borde:</label>
+                <input type="color" id="input-card-border-color" value="#e2e8f0" onchange="cambiarColorBorde(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Sombra del Cuadro:</label>
+                <select id="select-card-shadow" onchange="cambiarSombraTarjetas(this.value)">
+                    <option value="0 4px 15px rgba(0,0,0,0.05)">Sombra Suave</option>
+                    <option value="0 10px 25px rgba(0,0,0,0.15)">Sombra Intensa</option>
+                    <option value="none">Sin Sombra</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Opacidad / Transparencia:</label>
+                <input type="range" id="input-card-opacity" min="0.2" max="1" step="0.1" value="1" onchange="cambiarOpacidad(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Efecto Cristal (Glassmorphism):</label>
+                <select id="select-card-glass" onchange="cambiarEfectoCristal(this.value)">
+                    <option value="blur(0px)">Desactivado</option>
+                    <option value="blur(5px)">Cristal Leve (5px)</option>
+                    <option value="blur(12px)">Cristal Intenso (12px)</option>
+                </select>
+            </div>
+
+            <!-- Categoría 2: Colores Temáticos -->
+            <div class="custom-section-title"><i class="fa-solid fa-droplet"></i> 2. Paleta de Colores</div>
+
+            <div class="form-group">
+                <label>Color Principal (Títulos e Identificadores):</label>
+                <input type="color" id="input-primary-color" value="#003366" onchange="cambiarColorPrincipal(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Color Secundario (Botones y Subtítulos):</label>
+                <input type="color" id="input-secondary-color" value="#0055a5" onchange="cambiarColorSecundario(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Color de Fondo del Sitio:</label>
+                <input type="color" id="input-bg-color" value="#f8fafc" onchange="cambiarColorFondo(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Color de Fondo del Encabezado:</label>
+                <input type="color" id="input-header-color" value="#003366" onchange="cambiarColorHeader(this.value)">
+            </div>
+
+            <div class="form-group">
+                <label>Color del Texto del Encabezado:</label>
+                <input type="color" id="input-header-text-color" value="#ffffff" onchange="cambiarColorTextoHeader(this.value)">
+            </div>
+
+            <!-- Categoría 3: Tipografía -->
+            <div class="custom-section-title"><i class="fa-solid fa-font"></i> 3. Tipografía y Lectura</div>
+
+            <div class="form-group">
+                <label>Tamaño de Fuente Base:</label>
+                <select id="select-font-size" onchange="cambiarTamañoFuente(this.value)">
+                    <option value="14px">Pequeño (14px)</option>
+                    <option value="16px">Normal (16px)</option>
+                    <option value="18px">Grande (18px)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Familia Tipográfica:</label>
+                <select id="select-font-family" onchange="cambiarFuentePágina(this.value)">
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Interlineado del Texto:</label>
+                <select id="select-line-height" onchange="cambiarInterlineado(this.value)">
+                    <option value="1.4">Compacto (1.4)</option>
+                    <option value="1.7">Estándar (1.7)</option>
+                    <option value="2.0">Espaciado (2.0)</option>
+                </select>
+            </div>
+
+            <!-- Categoría 4: Dinamismo e Imagen de Fondo -->
+            <div class="custom-section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> 4. Dinamismo y Fondo</div>
+
+            <div class="form-group">
+                <label>Velocidad de Transiciones y Animaciones:</label>
+                <select id="select-animation-speed" onchange="cambiarVelocidadAnimaciones(this.value)">
+                    <option value="0.15s">Rápida</option>
+                    <option value="0.3s">Suave (Normal)</option>
+                    <option value="0.6s">Lenta</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Imagen de Fondo (URL):</label>
+                <input type="text" id="input-bg-image" placeholder="https://ejemplo.com/imagen.jpg" onchange="cambiarImagenFondo(this.value)">
+            </div>
+
+            <button class="btn-admin" style="width: 100%; margin-top: 1.5rem; justify-content: center;" onclick="cerrarCentroPersonalizacion()">Guardar Ajustes</button>
+        </div>
+    </div>
+
+    <!-- Modal Formas Geométricas -->
+    <div class="modal-overlay" id="shape-modal">
+        <div class="modal-box">
+            <h3>Insertar Forma Geométrica</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Selecciona la Forma:</label>
+                <select id="shape-type-select">
+                    <option value="rectangle">Rectángulo</option>
+                    <option value="circle">Círculo</option>
+                    <option value="triangle">Triángulo</option>
+                </select>
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarFormaGeometrica()">Insertar Forma</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalForma()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal Reproductor de Audio Dinámico Avanzado -->
+    <div class="modal-overlay" id="audio-modal">
+        <div class="modal-box">
+            <h3>Insertar Reproductor Interactivo de Audio</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Título / Descripción del Audio:</label>
+                <input type="text" id="audio-title-input" placeholder="Ejemplo: Explicación del Proyecto">
+            </div>
+            <div class="form-group">
+                <label>URL del Archivo MP3 / Audio:</label>
+                <input type="url" id="audio-url-input" placeholder="https://ejemplo.com/audio.mp3">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarAudioPlayer()">Insertar Audio</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalAudio()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal Ajuste Avanzado de Imágenes -->
+    <div class="modal-overlay" id="image-modal">
+        <div class="modal-box">
+            <h3>Añadir Imagen</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Ancho (px):</label>
+                <input type="number" id="img-width-input" value="200" min="50" max="800">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="confirmarSubidaImagenAvanzada()">Aceptar y Subir</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalImagen()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal Enlace -->
+    <div class="modal-overlay" id="link-modal">
+        <div class="modal-box">
+            <h3>Añadir Enlace Web</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Texto del Enlace:</label>
+                <input type="text" id="link-text" placeholder="Ejemplo: Ver Documento Oficial">
+            </div>
+            <div class="form-group">
+                <label>Dirección URL:</label>
+                <input type="url" id="link-url" placeholder="https://ejemplo.com">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarLink()">Agregar Enlace</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalLink()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal Dominio -->
+    <div class="modal-overlay" id="domain-modal">
+        <div class="modal-box">
+            <h3>Configurar Dominio Web</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Nuevo Dominio:</label>
+                <input type="text" id="new-domain-input" placeholder="https://mi-nuevo-dominio.com">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarNuevoDominio()">Actualizar Dominio</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalDominio()">Cancelar</button>
+        </div>
+    </div>
+
+    <input type="file" id="file-uploader" accept="image/*" style="display: none;" onchange="procesarArchivoSubido(event)">
+
+    <script>
+        const CREDENTIALS = { user: "nanogout", pass: "nano123" };
+        const MAX_SECTIONS_PER_PAGE = 10;
+        const MAX_COMMENTS_PER_PAGE = 10;
+
+        let currentPage = 1;
+        let currentCommentPage = 1;
+        let adminState = false;
+        let currentUploadTarget = null;
+        let currentLinkTarget = null;
+        let currentShapeTarget = null;
+        let currentAudioTarget = null;
+
+        // Variables para Arrastre Absoluto Libre
+        let isDraggingFree = false;
+        let currentFreeItem = null;
+        let offsetX = 0;
+        let offsetY = 0;
+        let activeSecIdx = null;
+        let activeItemIdx = null;
+
+        let siteData = JSON.parse(localStorage.getItem('coartacna_site_v11')) || {
+            domain: "https://coartacnad.edu.pe",
+            visits: 1,
+            cardRadius: "12px",
+            cardBorderStyle: "solid",
+            cardBorderColor: "#e2e8f0",
+            cardBorderWidth: "1px",
+            cardShadow: "0 4px 15px rgba(0,0,0,0.05)",
+            cardOpacity: "1",
+            cardGlass: "blur(0px)",
+            primaryColor: "#003366",
+            secondaryColor: "#0055a5",
+            bgColor: "#f8fafc",
+            headerColor: "#003366",
+            headerTextColor: "#ffffff",
+            fontSizeBase: "16px",
+            fontFamily: "'Poppins', sans-serif",
+            lineHeightBase: "1.7",
+            animSpeed: "0.3s",
+            bgImage: "",
+            sections: [
+                { 
+                    id: "sec-1", 
+                    title: "Proyectos Destacados", 
+                    text: "", 
+                    items: [
+                        { type: 'card', title: 'Tarjeta Múltiple', text: 'Información del proyecto académico.', left: 20, top: 20 },
+                        { type: 'textbox', text: 'Cuadro de texto flotante interactivo.', left: 320, top: 20 },
+                        { type: 'staticText', text: 'Texto estático fijo (sin fondo ni borde)', left: 20, top: 160 }
+                    ] 
+                }
+            ],
+            comments: []
+        };
+
+        siteData.visits = (siteData.visits || 0) + 1;
+        localStorage.setItem('coartacna_site_v11', JSON.stringify(siteData));
+
+        window.onload = function() {
+            document.getElementById('display-domain').innerText = siteData.domain;
+            document.getElementById('visit-count').innerText = siteData.visits;
+            aplicarEstilosPersonalizados();
+            renderizarPagina();
+            renderizarComentarios();
+
+            document.addEventListener('mousemove', moverElementoLibre);
+            document.addEventListener('mouseup', soltarElementoLibre);
+        };
+
+        // --- Autenticación ---
+        function abrirModalAuth() {
+            document.getElementById('input-user').value = '';
+            document.getElementById('input-pass').value = '';
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+
+        function cerrarModalAuth() {
+            document.getElementById('auth-modal').style.display = 'none';
+            document.getElementById('auth-error').style.display = 'none';
+        }
+
+        function procesarAutenticacion(e) {
+            e.preventDefault();
+            const u = document.getElementById('input-user').value.trim();
+            const p = document.getElementById('input-pass').value.trim();
+
+            if (u === CREDENTIALS.user && p === CREDENTIALS.pass) {
+                adminState = true;
+                cerrarModalAuth();
+
+                document.getElementById('welcome-user-name').innerText = u;
+                document.getElementById('welc-pages-count').innerText = Math.ceil(siteData.sections.length / MAX_SECTIONS_PER_PAGE) || 1;
+                document.getElementById('welc-sections-count').innerText = siteData.sections.length;
+                document.getElementById('welc-comments-count').innerText = siteData.comments.length;
+                document.getElementById('welc-visits-count').innerText = siteData.visits;
+
+                document.getElementById('welcome-modal').style.display = 'flex';
+                activarEdicion();
+            } else {
+                document.getElementById('auth-error').style.display = 'block';
+            }
+        }
+
+        function cerrarModalBienvenida() { document.getElementById('welcome-modal').style.display = 'none'; }
+
+        function cerrarSesion() {
+            adminState = false;
+            desactivarEdicion();
+        }
+
+        function activarEdicion() {
+            document.body.classList.add('editable-mode');
+            document.getElementById('status-indicator').classList.add('active');
+            document.getElementById('admin-status-text').innerText = "Modo Edición (nanogout)";
+            document.getElementById('btn-login-modal').style.display = "none";
+            document.getElementById('btn-save').style.display = "inline-flex";
+            document.getElementById('btn-logout').style.display = "inline-flex";
+            document.getElementById('editor-controls').style.display = "flex";
+            renderizarPagina();
+        }
+
+        function desactivarEdicion() {
+            document.body.classList.remove('editable-mode');
+            document.getElementById('status-indicator').classList.remove('active');
+            document.getElementById('admin-status-text').innerText = "Modo Lectura (Público)";
+            document.getElementById('btn-login-modal').style.display = "inline-flex";
+            document.getElementById('btn-save').style.display = "none";
+            document.getElementById('btn-logout').style.display = "none";
+            document.getElementById('editor-controls').style.display = "none";
+            renderizarPagina();
+        }
+
+        // --- Personalización Visual Avanzada ---
+        function abrirCentroPersonalizacion() {
+            document.getElementById('select-card-shape').value = siteData.cardRadius || "12px";
+            document.getElementById('select-card-border').value = siteData.cardBorderStyle || "solid";
+            document.getElementById('input-card-border-width').value = parseInt(siteData.cardBorderWidth) || 1;
+            document.getElementById('input-card-border-color').value = siteData.cardBorderColor || "#e2e8f0";
+            document.getElementById('select-card-shadow').value = siteData.cardShadow || "0 4px 15px rgba(0,0,0,0.05)";
+            document.getElementById('input-card-opacity').value = siteData.cardOpacity || "1";
+            document.getElementById('select-card-glass').value = siteData.cardGlass || "blur(0px)";
+            document.getElementById('input-primary-color').value = siteData.primaryColor || "#003366";
+            document.getElementById('input-secondary-color').value = siteData.secondaryColor || "#0055a5";
+            document.getElementById('input-bg-color').value = siteData.bgColor || "#f8fafc";
+            document.getElementById('input-header-color').value = siteData.headerColor || "#003366";
+            document.getElementById('input-header-text-color').value = siteData.headerTextColor || "#ffffff";
+            document.getElementById('select-font-size').value = siteData.fontSizeBase || "16px";
+            document.getElementById('select-font-family').value = siteData.fontFamily || "'Poppins', sans-serif";
+            document.getElementById('select-line-height').value = siteData.lineHeightBase || "1.7";
+            document.getElementById('select-animation-speed').value = siteData.animSpeed || "0.3s";
+            document.getElementById('input-bg-image').value = siteData.bgImage || "";
+            document.getElementById('custom-modal').style.display = 'flex';
+        }
+
+        function cerrarCentroPersonalizacion() { document.getElementById('custom-modal').style.display = 'none'; }
+
+        function cambiarFormaCuadros(val) { siteData.cardRadius = val; document.documentElement.style.setProperty('--card-radius', val); }
+        function cambiarEstiloBorde(val) { siteData.cardBorderStyle = val; document.documentElement.style.setProperty('--card-border-style', val); }
+        function cambiarGrosorBorde(val) { siteData.cardBorderWidth = val + 'px'; document.documentElement.style.setProperty('--card-border-width', val + 'px'); }
+        function cambiarColorBorde(val) { siteData.cardBorderColor = val; document.documentElement.style.setProperty('--card-border-color', val); }
+        function cambiarSombraTarjetas(val) { siteData.cardShadow = val; document.documentElement.style.setProperty('--card-shadow', val); }
+        function cambiarOpacidad(val) { siteData.cardOpacity = val; document.documentElement.style.setProperty('--card-opacity', val); }
+        function cambiarEfectoCristal(val) { siteData.cardGlass = val; document.documentElement.style.setProperty('--card-glass', val); }
+        function cambiarColorPrincipal(val) { siteData.primaryColor = val; document.documentElement.style.setProperty('--primary-color', val); }
+        function cambiarColorSecundario(val) { siteData.secondaryColor = val; document.documentElement.style.setProperty('--secondary-color', val); }
+        function cambiarColorFondo(val) { siteData.bgColor = val; document.documentElement.style.setProperty('--site-bg-color', val); }
+        function cambiarColorHeader(val) { siteData.headerColor = val; document.documentElement.style.setProperty('--header-bg-color', val); }
+        function cambiarColorTextoHeader(val) { siteData.headerTextColor = val; document.documentElement.style.setProperty('--header-text-color', val); }
+        function cambiarTamañoFuente(val) { siteData.fontSizeBase = val; document.documentElement.style.setProperty('--font-size-base', val); }
+        function cambiarFuentePágina(val) { siteData.fontFamily = val; document.documentElement.style.setProperty('--font-family-site', val); }
+        function cambiarInterlineado(val) { siteData.lineHeightBase = val; document.documentElement.style.setProperty('--line-height-base', val); }
+        function cambiarVelocidadAnimaciones(val) { siteData.animSpeed = val; document.documentElement.style.setProperty('--animation-speed', val); }
+        function cambiarImagenFondo(val) {
+            siteData.bgImage = val;
+            document.documentElement.style.setProperty('--site-bg-image', val.trim() !== '' ? `url('${val}')` : 'none');
+        }
+
+        function aplicarEstilosPersonalizados() {
+            if (siteData.cardRadius) document.documentElement.style.setProperty('--card-radius', siteData.cardRadius);
+            if (siteData.cardBorderStyle) document.documentElement.style.setProperty('--card-border-style', siteData.cardBorderStyle);
+            if (siteData.cardBorderWidth) document.documentElement.style.setProperty('--card-border-width', siteData.cardBorderWidth);
+            if (siteData.cardBorderColor) document.documentElement.style.setProperty('--card-border-color', siteData.cardBorderColor);
+            if (siteData.cardShadow) document.documentElement.style.setProperty('--card-shadow', siteData.cardShadow);
+            if (siteData.cardOpacity) document.documentElement.style.setProperty('--card-opacity', siteData.cardOpacity);
+            if (siteData.cardGlass) document.documentElement.style.setProperty('--card-glass', siteData.cardGlass);
+            if (siteData.primaryColor) document.documentElement.style.setProperty('--primary-color', siteData.primaryColor);
+            if (siteData.secondaryColor) document.documentElement.style.setProperty('--secondary-color', siteData.secondaryColor);
+            if (siteData.bgColor) document.documentElement.style.setProperty('--site-bg-color', siteData.bgColor);
+            if (siteData.headerColor) document.documentElement.style.setProperty('--header-bg-color', siteData.headerColor);
+            if (siteData.headerTextColor) document.documentElement.style.setProperty('--header-text-color', siteData.headerTextColor);
+            if (siteData.fontSizeBase) document.documentElement.style.setProperty('--font-size-base', siteData.fontSizeBase);
+            if (siteData.fontFamily) document.documentElement.style.setProperty('--font-family-site', siteData.fontFamily);
+            if (siteData.lineHeightBase) document.documentElement.style.setProperty('--line-height-base', siteData.lineHeightBase);
+            if (siteData.animSpeed) document.documentElement.style.setProperty('--animation-speed', siteData.animSpeed);
+            if (siteData.bgImage) document.documentElement.style.setProperty('--site-bg-image', siteData.bgImage.trim() !== '' ? `url('${siteData.bgImage}')` : 'none');
+        }
+
+        // --- Renderizado y Lógica ---
+        function renderizarPagina() {
+            const wrapper = document.getElementById('sections-wrapper');
+            wrapper.innerHTML = "";
+
+            const totalPages = Math.ceil(siteData.sections.length / MAX_SECTIONS_PER_PAGE) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const start = (currentPage - 1) * MAX_SECTIONS_PER_PAGE;
+            const end = start + MAX_SECTIONS_PER_PAGE;
+            const sectionsToDisplay = siteData.sections.slice(start, end);
+
+            sectionsToDisplay.forEach((sec, idx) => {
+                const globalIndex = start + idx;
+                const div = document.createElement('div');
+                div.className = 'section-block';
+                
+                const adminHelpText = adminState ? `<p class="section-subtitle"><i class="fa-solid fa-up-down-left-right"></i> Arrastra cualquier cuadro o elemento libremente dentro de este recuadro.</p>` : '';
+
+                div.innerHTML = `
+                    <h2 class="section-title ${adminState ? 'editable' : ''}" onblur="actualizarTextoSection(${globalIndex}, 'title', this.innerText)">${sec.title}</h2>
+                    ${adminHelpText}
+                    
+                    <div class="free-canvas" id="canvas-${sec.id}"></div>
+
+                    <div class="section-actions">
+                        <button class="btn-admin" onclick="agregarTarjeta(${globalIndex})"><i class="fa-solid fa-plus"></i> Tarjeta</button>
+                        <button class="btn-admin" onclick="agregarCuadroTexto(${globalIndex})"><i class="fa-solid fa-font"></i> Texto Flotante</button>
+                        <button class="btn-admin" onclick="agregarTextoEstatico(${globalIndex})"><i class="fa-solid fa-align-left"></i> Texto Estático</button>
+                        <button class="btn-admin" onclick="abrirModalAudio(${globalIndex})"><i class="fa-solid fa-music"></i> Audio Player</button>
+                        <button class="btn-admin" onclick="abrirModalForma(${globalIndex})"><i class="fa-solid fa-shapes"></i> Forma Geométrica</button>
+                        <button class="btn-admin" onclick="prepararSubida(${globalIndex})"><i class="fa-solid fa-image"></i> Subir Foto</button>
+                        <button class="btn-admin" onclick="abrirModalLink(${globalIndex})"><i class="fa-solid fa-link"></i> Añadir Link</button>
+                        <button class="btn-admin btn-danger" onclick="eliminarSeccion(${globalIndex})"><i class="fa-solid fa-trash"></i> Eliminar Sección</button>
+                    </div>
+                `;
+
+                wrapper.appendChild(div);
+
+                const canvas = div.querySelector(`#canvas-${sec.id}`);
+
+                sec.items.forEach((item, itemIdx) => {
+                    const el = document.createElement('div');
+                    el.className = 'free-item' + (item.type === 'staticText' ? ' static-text-item' : '');
+                    el.style.left = (item.left || 20) + 'px';
+                    el.style.top = (item.top || 20) + 'px';
+
+                    if (adminState) {
+                        el.addEventListener('mousedown', (e) => iniciarArrastreLibre(e, globalIndex, itemIdx, el));
+                    }
+
+                    let innerContent = '';
+                    if (item.type === 'card') {
+                        innerContent = `
+                            <h3 class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'title', this.innerText)">${item.title}</h3>
+                            <p class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'text', this.innerText)">${item.text}</p>
+                        `;
+                    } else if (item.type === 'textbox') {
+                        innerContent = `
+                            <p class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'text', this.innerText)">${item.text}</p>
+                        `;
+                    } else if (item.type === 'staticText') {
+                        innerContent = `
+                            <div class="static-text-content ${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'text', this.innerText)">${item.text}</div>
+                        `;
+                    } else if (item.type === 'audio') {
+                        const audioId = `audio-${globalIndex}-${itemIdx}`;
+                        innerContent = `
+                            <div class="custom-audio-player">
+                                <div class="audio-title">
+                                    <i class="fa-solid fa-music"></i>
+                                    <span class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'title', this.innerText)">${item.title}</span>
+                                </div>
+                                <audio id="${audioId}" src="${item.url}" preload="metadata"></audio>
+                                <div class="audio-controls-row">
+                                    <button class="btn-audio-ctrl" onclick="retrocederAudio('${audioId}', 5)"><i class="fa-solid fa-rotate-left"></i></button>
+                                    <button class="btn-audio-ctrl play-btn" onclick="togglePlayAudio('${audioId}', this)"><i class="fa-solid fa-play"></i></button>
+                                    <button class="btn-audio-ctrl" onclick="adelantarAudio('${audioId}', 5)"><i class="fa-solid fa-rotate-right"></i></button>
+                                </div>
+                                <div class="audio-progress-container">
+                                    <span id="time-${audioId}">0:00</span>
+                                    <input type="range" class="audio-progress-bar" id="seek-${audioId}" value="0" min="0" max="100" oninput="cambiarProgresoAudio('${audioId}', this.value)">
+                                </div>
+                            </div>
+                        `;
+                    } else if (item.type === 'shape') {
+                        innerContent = `<div class="shape-item shape-${item.shape}"></div>`;
+                    } else if (item.type === 'foto') {
+                        const styleWidth = item.width ? `width: ${item.width}px;` : '';
+                        innerContent = `<img src="${item.url}" alt="Foto" style="${styleWidth}">`;
+                    } else if (item.type === 'link') {
+                        innerContent = `
+                            <i class="fa-solid fa-globe" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                            <h4>${item.text}</h4>
+                            <a href="${item.url}" target="_blank" class="card-link"><i class="fa-solid fa-up-right-from-square"></i> Abrir</a>
+                        `;
+                    }
+
+                    el.innerHTML = `
+                        <div class="free-item-controls">
+                            <button onclick="eliminarItem(${globalIndex}, ${itemIdx})"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        ${innerContent}
+                    `;
+
+                    canvas.appendChild(el);
+
+                    // Inicialización de eventos para audios personalizados
+                    if (item.type === 'audio') {
+                        setTimeout(() => vincularEventosAudio(`audio-${globalIndex}-${itemIdx}`), 50);
+                    }
+                });
+            });
+
+            document.getElementById('page-info-top').innerText = `Página ${currentPage} de ${totalPages}`;
+            document.getElementById('page-info-bottom').innerText = `Página ${currentPage} de ${totalPages}`;
+            document.getElementById('prev-btn-top').disabled = currentPage === 1;
+            document.getElementById('next-btn-top').disabled = currentPage >= totalPages;
+            document.getElementById('prev-btn-bottom').disabled = currentPage === 1;
+            document.getElementById('next-btn-bottom').disabled = currentPage >= totalPages;
+
+            if (adminState) {
+                document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+            }
+        }
+
+        // --- Funciones Interactivas de Audio Avanzado ---
+        function togglePlayAudio(id, btn) {
+            const audio = document.getElementById(id);
+            if (!audio) return;
+
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                audio.pause();
+                btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+
+        function retrocederAudio(id, segundos) {
+            const audio = document.getElementById(id);
+            if (audio) audio.currentTime = Math.max(0, audio.currentTime - segundos);
+        }
+
+        function adelantarAudio(id, segundos) {
+            const audio = document.getElementById(id);
+            if (audio) audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + segundos);
+        }
+
+        function cambiarProgresoAudio(id, valor) {
+            const audio = document.getElementById(id);
+            if (audio && audio.duration) {
+                audio.currentTime = (valor / 100) * audio.duration;
+            }
+        }
+
+        function vincularEventosAudio(id) {
+            const audio = document.getElementById(id);
+            const timeLabel = document.getElementById(`time-${id}`);
+            const seekInput = document.getElementById(`seek-${id}`);
+
+            if (!audio || !timeLabel || !seekInput) return;
+
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    seekInput.value = pct;
+                    
+                    const m = Math.floor(audio.currentTime / 60);
+                    const s = Math.floor(audio.currentTime % 60);
+                    timeLabel.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                }
+            });
+
+            audio.addEventListener('ended', () => {
+                const btn = audio.parentElement.querySelector('.play-btn');
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                seekInput.value = 0;
+            });
+        }
+
+        // --- Arrastre Libre Exclusivo de Administración ---
+        function iniciarArrastreLibre(e, secIdx, itemIdx, element) {
+            if (!adminState) return;
+            if (e.target.isContentEditable || e.target.tagName === 'BUTTON' || e.target.tagName === 'I' || e.target.tagName === 'INPUT') return;
+            
+            isDraggingFree = true;
+            currentFreeItem = element;
+            activeSecIdx = secIdx;
+            activeItemIdx = itemIdx;
+
+            const rect = element.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            
+            element.style.zIndex = 100;
+        }
+
+        function moverElementoLibre(e) {
+            if (!isDraggingFree || !currentFreeItem || !adminState) return;
+            e.preventDefault();
+
+            const canvas = currentFreeItem.parentElement;
+            const canvasRect = canvas.getBoundingClientRect();
+
+            let x = e.clientX - canvasRect.left - offsetX;
+            let y = e.clientY - canvasRect.top - offsetY;
+
+            currentFreeItem.style.left = x + 'px';
+            currentFreeItem.style.top = y + 'px';
+
+            siteData.sections[activeSecIdx].items[activeItemIdx].left = x;
+            siteData.sections[activeSecIdx].items[activeItemIdx].top = y;
+        }
+
+        function soltarElementoLibre() {
+            if (isDraggingFree && currentFreeItem) {
+                currentFreeItem.style.zIndex = 1;
+                isDraggingFree = false;
+                currentFreeItem = null;
+                guardarTodoSilencioso();
+            }
+        }
+
+        // --- Control Estructural ---
+        function cambiarPagina(delta) { currentPage += delta; renderizarPagina(); }
+
+        function crearNuevaSeccion() {
+            siteData.sections.push({
+                id: "sec-" + Date.now(),
+                title: "Nueva Sección",
+                text: "",
+                items: []
+            });
+            renderizarPagina();
+        }
+
+        function crearNuevaPagina() {
+            const currentTotalPages = Math.ceil(siteData.sections.length / MAX_SECTIONS_PER_PAGE) || 1;
+            const targetSections = currentTotalPages * MAX_SECTIONS_PER_PAGE;
+            
+            while (siteData.sections.length < targetSections) {
+                siteData.sections.push({
+                    id: "sec-fill-" + Date.now() + "-" + Math.random(),
+                    title: "Sección Complementaria",
+                    text: "",
+                    items: []
+                });
+            }
+
+            siteData.sections.push({
+                id: "sec-" + Date.now(),
+                title: "Nueva Página",
+                text: "",
+                items: []
+            });
+
+            currentPage = Math.ceil(siteData.sections.length / MAX_SECTIONS_PER_PAGE);
+            renderizarPagina();
+        }
+
+        function eliminarSeccion(index) {
+            if (confirm("¿Eliminar esta sección?")) {
+                siteData.sections.splice(index, 1);
+                renderizarPagina();
+            }
+        }
+
+        function agregarTarjeta(secIdx) {
+            siteData.sections[secIdx].items.push({ type: 'card', title: 'Nueva Tarjeta', text: 'Texto descriptivo.', left: 30, top: 30 });
+            renderizarPagina();
+        }
+
+        function agregarCuadroTexto(secIdx) {
+            siteData.sections[secIdx].items.push({ type: 'textbox', text: 'Texto independiente flotante.', left: 50, top: 50 });
+            renderizarPagina();
+        }
+
+        function agregarTextoEstatico(secIdx) {
+            siteData.sections[secIdx].items.push({ type: 'staticText', text: 'Texto estático plano personalizable.', left: 40, top: 120 });
+            renderizarPagina();
+        }
+
+        function abrirModalAudio(secIdx) { currentAudioTarget = secIdx; document.getElementById('audio-modal').style.display = 'flex'; }
+        function cerrarModalAudio() { document.getElementById('audio-modal').style.display = 'none'; }
+        function guardarAudioPlayer() {
+            const title = document.getElementById('audio-title-input').value.trim() || 'Audio Informativo';
+            const url = document.getElementById('audio-url-input').value.trim();
+            if (url) {
+                siteData.sections[currentAudioTarget].items.push({ type: 'audio', title: title, url: url, left: 40, top: 40 });
+                cerrarModalAudio();
+                renderizarPagina();
+            }
+        }
+
+        function abrirModalForma(secIdx) { currentShapeTarget = secIdx; document.getElementById('shape-modal').style.display = 'flex'; }
+        function cerrarModalForma() { document.getElementById('shape-modal').style.display = 'none'; }
+        function guardarFormaGeometrica() {
+            const shapeType = document.getElementById('shape-type-select').value;
+            siteData.sections[currentShapeTarget].items.push({ type: 'shape', shape: shapeType, left: 40, top: 40 });
+            cerrarModalForma();
+            renderizarPagina();
+        }
+
+        function prepararSubida(secIdx) { currentUploadTarget = secIdx; document.getElementById('image-modal').style.display = 'flex'; }
+        function cerrarModalImagen() { document.getElementById('image-modal').style.display = 'none'; }
+        function confirmarSubidaImagenAvanzada() {
+            cerrarModalImagen();
+            document.getElementById('file-uploader').click();
+        }
+
+        function procesarArchivoSubido(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const widthVal = document.getElementById('img-width-input').value;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                siteData.sections[currentUploadTarget].items.push({
+                    type: 'foto',
+                    url: evt.target.result,
+                    width: widthVal,
+                    left: 60,
+                    top: 60
+                });
+                renderizarPagina();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function abrirModalLink(secIdx) { currentLinkTarget = secIdx; document.getElementById('link-modal').style.display = 'flex'; }
+        function cerrarModalLink() { document.getElementById('link-modal').style.display = 'none'; }
+        function guardarLink() {
+            const text = document.getElementById('link-text').value.trim();
+            const url = document.getElementById('link-url').value.trim();
+            if (text && url) {
+                siteData.sections[currentLinkTarget].items.push({ type: 'link', text: text, url: url, left: 30, top: 30 });
+                cerrarModalLink();
+                renderizarPagina();
+            }
+        }
+
+        function abrirModalDominio() { document.getElementById('domain-modal').style.display = 'flex'; }
+        function cerrarModalDominio() { document.getElementById('domain-modal').style.display = 'none'; }
+        function guardarNuevoDominio() {
+            const newDom = document.getElementById('new-domain-input').value.trim();
+            if (newDom) {
+                siteData.domain = newDom;
+                document.getElementById('display-domain').innerText = newDom;
+                cerrarModalDominio();
+                guardarTodoSilencioso();
+            }
+        }
+
+        function actualizarTextoSection(index, field, val) { if (siteData.sections[index]) siteData.sections[index][field] = val; }
+        function actualizarItem(secIdx, itemIdx, field, val) { if (siteData.sections[secIdx].items[itemIdx]) siteData.sections[secIdx].items[itemIdx][field] = val; }
+        function eliminarItem(secIdx, itemIdx) {
+            siteData.sections[secIdx].items.splice(itemIdx, 1);
+            renderizarPagina();
+        }
+
+        // --- Comentarios ---
+        function publicarComentario(e) {
+            e.preventDefault();
+            const author = document.getElementById('comm-author').value.trim();
+            const text = document.getElementById('comm-text').value.trim();
+            const photoInput = document.getElementById('comm-photo');
+
+            if (author && text) {
+                const commentObj = {
+                    id: "comm-" + Date.now(),
+                    author: author,
+                    text: text,
+                    date: new Date().toLocaleString(),
+                    photo: null
+                };
+
+                if (photoInput.files && photoInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        commentObj.photo = evt.target.result;
+                        guardarComentario(commentObj);
+                    };
+                    reader.readAsDataURL(photoInput.files[0]);
+                } else {
+                    guardarComentario(commentObj);
+                }
+            }
+        }
+
+        function guardarComentario(commentObj) {
+            siteData.comments.unshift(commentObj);
+            document.getElementById('comm-author').value = '';
+            document.getElementById('comm-text').value = '';
+            document.getElementById('comm-photo').value = '';
+            renderizarComentarios();
+            guardarTodoSilencioso();
+        }
+
+        function renderizarComentarios() {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = '';
+
+            const totalPages = Math.ceil(siteData.comments.length / MAX_COMMENTS_PER_PAGE) || 1;
+            if (currentCommentPage > totalPages) currentCommentPage = totalPages;
+
+            const start = (currentCommentPage - 1) * MAX_COMMENTS_PER_PAGE;
+            const end = start + MAX_COMMENTS_PER_PAGE;
+            const list = siteData.comments.slice(start, end);
+
+            list.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'comment-item';
+                div.innerHTML = `
+                    <strong><i class="fa-solid fa-user"></i> ${c.author}</strong> <small style="color: var(--text-muted);">(${c.date})</small>
+                    <p style="margin-top: 4px;">${c.text}</p>
+                    ${c.photo ? `<img src="${c.photo}" class="comment-media" alt="Foto adjunta">` : ''}
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('comm-page-info').innerText = `Comentarios: Página ${currentCommentPage} de ${totalPages}`;
+            document.getElementById('comm-prev-btn').disabled = currentCommentPage === 1;
+            document.getElementById('comm-next-btn').disabled = currentCommentPage >= totalPages;
+        }
+
+        function cambiarPaginaComentarios(delta) {
+            currentCommentPage += delta;
+            renderizarComentarios();
+        }
+
+        function guardarTodo() {
+            localStorage.setItem('coartacna_site_v11', JSON.stringify(siteData));
+            alert("Configuración y diseño guardados correctamente.");
+        }
+
+        function guardarTodoSilencioso() {
+            localStorage.setItem('coartacna_site_v11', JSON.stringify(siteData));
+        }
+
+        function restaurarPorDefecto() {
+            if (confirm("¿Deseas restablecer el sitio por completo?")) {
+                localStorage.removeItem('coartacna_site_v11');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
