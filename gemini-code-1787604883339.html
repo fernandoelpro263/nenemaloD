@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Académico COAR Tacna | coartacnaD</title>
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055a5;
+            --accent-color: #ffcc00;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding-bottom: 80px;
+        }
+
+        /* --- Dominio --- */
+        #browser-bar {
+            background-color: #1e293b;
+            color: #94a3b8;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .domain-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .domain-badge {
+            background-color: #334155;
+            color: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .domain-badge i { color: var(--success-color); }
+
+        /* --- Panel de Control del Administrador --- */
+        #admin-bar {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+        }
+
+        .status-badge.active {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px var(--success-color);
+        }
+
+        .btn-admin {
+            background-color: var(--accent-color);
+            border: none;
+            color: #000;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+        }
+
+        .btn-admin:hover { transform: translateY(-1px); filter: brightness(1.05); }
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-secondary { background-color: #3b82f6; color: white; }
+
+        /* --- Barra de Controles Extendida --- */
+        #editor-controls {
+            display: none;
+            background-color: #1e293b;
+            padding: 12px 24px;
+            border-bottom: 1px solid #334155;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .admin-dashboard-card {
+            background: #334155;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Visitas y Métricas --- */
+        .visit-counter {
+            background: #0284c7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- Modos de Edición Visual --- */
+        body.editable-mode [contenteditable="true"] {
+            outline: 2px dashed var(--secondary-color);
+            outline-offset: 4px;
+        }
+
+        body.editable-mode .section-actions,
+        body.editable-mode .card-actions {
+            display: flex !important;
+        }
+
+        .section-actions, .card-actions {
+            display: none;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #cbd5e1;
+            flex-wrap: wrap;
+        }
+
+        /* --- Paginación --- */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            margin: 1.5rem 0;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .page-btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        /* --- Estructura --- */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-block {
+            background: var(--card-bg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+        }
+
+        .card img {
+            max-width: 100%;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .card-link:hover { text-decoration: underline; }
+
+        /* --- Sección de Comentarios y Advertencia --- */
+        .comments-wrapper {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-top: 3rem;
+        }
+
+        .warning-box {
+            background: #fffbebf8;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-size: 0.88rem;
+            color: #92400e;
+        }
+
+        .comment-item {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .comment-media {
+            max-width: 250px;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .comment-reactions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .reaction-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        /* --- Modales --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dominio Dinámico -->
+    <div id="browser-bar">
+        <div class="domain-container">
+            <i class="fa-solid fa-globe"></i>
+            <span>Dominio Actual:</span>
+            <div class="domain-badge">
+                <i class="fa-solid fa-lock"></i>
+                <span id="display-domain">https://coartacnad.edu.pe</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <span class="visit-counter"><i class="fa-solid fa-eye"></i> Visitas: <span id="visit-count">0</span></span>
+        </div>
+    </div>
+
+    <!-- Panel de Control del Administrador -->
+    <div id="admin-bar">
+        <div class="admin-info">
+            <span class="status-badge" id="status-indicator"></span>
+            <span id="admin-status-text" style="font-size: 0.9rem;">Modo Lectura (Público)</span>
+        </div>
+        <div>
+            <button class="btn-admin" id="btn-login-modal" onclick="abrirModalAuth()">
+                <i class="fa-solid fa-shield-halved"></i> Panel Administrador
+            </button>
+            <button class="btn-admin btn-secondary" id="btn-save" onclick="guardarTodo()" style="display: none;">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+            </button>
+            <button class="btn-admin btn-danger" id="btn-logout" onclick="cerrarSesion()" style="display: none;">
+                <i class="fa-solid fa-right-from-bracket"></i> Salir
+            </button>
+        </div>
+    </div>
+
+    <!-- Panel Extendido para Administrador -->
+    <div id="editor-controls">
+        <button class="btn-admin" onclick="crearNuevaSeccion()"><i class="fa-solid fa-plus"></i> Crear Sección</button>
+        <button class="btn-admin" onclick="abrirModalDominio()"><i class="fa-solid fa-link"></i> Cambiar Dominio Web</button>
+        <div class="admin-dashboard-card">
+            <i class="fa-solid fa-chart-line"></i> Total Contenidos: <span id="total-items-count">0</span>
+        </div>
+        <button class="btn-admin btn-danger" onclick="restaurarPorDefecto()"><i class="fa-solid fa-rotate-left"></i> Restablecer Sitio</button>
+    </div>
+
+    <header>
+        <h1 class="editable" id="header-title">Portafolio Académico COAR Tacna</h1>
+        <p class="editable" id="header-subtitle">Espacio educativo oficial de proyectos e investigación</p>
+    </header>
+
+    <div class="container">
+        <!-- Paginación Superior -->
+        <div class="pagination-container">
+            <span id="page-info-top">Página 1 de 1</span>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prev-btn-top" onclick="cambiarPagina(-1)"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                <button class="page-btn" id="next-btn-top" onclick="cambiarPagina(1)">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Secciones -->
+        <div id="sections-wrapper"></div>
+
+        <!-- Paginación Inferior -->
+        <div class="pagination-container">
+            <span id="page-info-bottom">Página 1 de 1</span>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prev-btn-bottom" onclick="cambiarPagina(-1)"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                <button class="page-btn" id="next-btn-bottom" onclick="cambiarPagina(1)">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Sección de Comentarios y Subida de Fotos Pública -->
+        <div class="comments-wrapper">
+            <h3><i class="fa-solid fa-comments"></i> Preguntas, Mensajes y Fotos de Lectores</h3>
+            
+            <!-- Advertencia de Uso -->
+            <div class="warning-box">
+                <i class="fa-solid fa-triangle-exclamation"></i> <strong>Aviso para la Comunidad:</strong>
+                Por favor, mantén un lenguaje respetuoso. Está estrictamente prohibido enviar textos ofensivos, difamatorios o fuera de lugar.
+            </div>
+
+            <form onsubmit="publicarComentario(event)" style="margin-bottom: 1.5rem;">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="comm-author" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Mensaje o Pregunta:</label>
+                    <textarea id="comm-text" rows="3" placeholder="Escribe aquí tu comentario..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Adjuntar Foto (Opcional):</label>
+                    <input type="file" id="comm-photo" accept="image/*">
+                </div>
+                <button type="submit" class="btn-admin"><i class="fa-solid fa-paper-plane"></i> Publicar Mensaje</button>
+            </form>
+
+            <div id="comments-list"></div>
+
+            <!-- Paginador Comentarios -->
+            <div class="pagination-container" style="background: #f8fafc; margin-top: 1rem;">
+                <span id="comm-page-info">Comentarios: Página 1 de 1</span>
+                <div class="pagination-controls">
+                    <button class="page-btn" id="comm-prev-btn" onclick="cambiarPaginaComentarios(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="page-btn" id="comm-next-btn" onclick="cambiarPaginaComentarios(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Autenticación con Mensaje de Bienvenida -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-box">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <i class="fa-solid fa-user-shield" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                <h3 style="margin-top: 0.5rem;">Bienvenido al Panel de Control</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                    Estimado administrador <strong>nanogout</strong>, ingresa tus credenciales para habilitar la edición de contenidos, fotos, enlaces y la configuración del dominio web.
+                </p>
+            </div>
+            <form onsubmit="procesarAutenticacion(event)">
+                <div class="form-group">
+                    <label>Usuario:</label>
+                    <input type="text" id="input-user" placeholder="nanogout" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="input-pass" placeholder="••••••••" required>
+                </div>
+                <div id="auth-error" style="color: var(--danger-color); font-size: 0.85rem; display: none; text-align: center; margin-bottom: 0.5rem;">
+                    Usuario o clave incorrectos.
+                </div>
+                <button type="submit" class="btn-admin" style="width: 100%; justify-content: center;">Ingresar al Sistema</button>
+                <button type="button" class="btn-admin" style="width: 100%; justify-content: center; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalAuth()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Agregar Enlace/Link -->
+    <div class="modal-overlay" id="link-modal">
+        <div class="modal-box">
+            <h3>Añadir Enlace Web</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Texto del Enlace:</label>
+                <input type="text" id="link-text" placeholder="Ejemplo: Ver Documento Oficial">
+            </div>
+            <div class="form-group">
+                <label>Dirección URL:</label>
+                <input type="url" id="link-url" placeholder="https://ejemplo.com">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarLink()">Agregar Enlace</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalLink()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal para Cambiar Dominio -->
+    <div class="modal-overlay" id="domain-modal">
+        <div class="modal-box">
+            <h3>Cambiar Dominio Web del Sitio</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; margin-bottom: 1rem;">
+                Escribe la nueva URL o dirección web pública con la que deseas identificar tu portafolio.
+            </p>
+            <div class="form-group">
+                <label>Nuevo Dominio:</label>
+                <input type="text" id="new-domain-input" placeholder="https://mi-nuevo-dominio.com">
+            </div>
+            <button class="btn-admin" style="width: 100%;" onclick="guardarNuevoDominio()">Actualizar Dominio</button>
+            <button class="btn-admin" style="width: 100%; background: transparent; color: var(--text-muted); margin-top: 0.5rem;" onclick="cerrarModalDominio()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Input Oculto para Subida General -->
+    <input type="file" id="file-uploader" accept="image/*" style="display: none;" onchange="procesarArchivoSubido(event)">
+
+    <script>
+        const CREDENTIALS = { user: "nanogout", pass: "nano123" };
+        const MAX_SECTIONS_PER_PAGE = 10;
+        const MAX_COMMENTS_PER_PAGE = 10;
+
+        let currentPage = 1;
+        let currentCommentPage = 1;
+        let adminState = false;
+        let currentUploadTarget = null;
+        let currentLinkTarget = null;
+
+        // Cargar Datos
+        let siteData = JSON.parse(localStorage.getItem('coartacna_site_v5')) || {
+            domain: "https://coartacnad.edu.pe",
+            visits: 1,
+            sections: [
+                { id: "sec-1", title: "Proyectos Destacados", text: "Espacio para exhibir proyectos académicos e investigaciones.", items: [] }
+            ],
+            comments: []
+        };
+
+        // Contador de Visitas
+        siteData.visits = (siteData.visits || 0) + 1;
+        localStorage.setItem('coartacna_site_v5', JSON.stringify(siteData));
+
+        window.onload = function() {
+            document.getElementById('display-domain').innerText = siteData.domain;
+            document.getElementById('visit-count').innerText = siteData.visits;
+            renderizarPagina();
+            renderizarComentarios();
+            actualizarMetricasAdmin();
+        };
+
+        // Autenticación
+        function abrirModalAuth() { document.getElementById('auth-modal').style.display = 'flex'; }
+        function cerrarModalAuth() { document.getElementById('auth-modal').style.display = 'none'; document.getElementById('auth-error').style.display = 'none'; }
+
+        function procesarAutenticacion(e) {
+            e.preventDefault();
+            const u = document.getElementById('input-user').value.trim();
+            const p = document.getElementById('input-pass').value.trim();
+
+            if (u === CREDENTIALS.user && p === CREDENTIALS.pass) {
+                adminState = true;
+                cerrarModalAuth();
+                activarEdicion();
+                alert("¡Bienvenido nanogout! Has accedido al panel de control con permisos totales.");
+            } else {
+                document.getElementById('auth-error').style.display = 'block';
+            }
+        }
+
+        function cerrarSesion() {
+            adminState = false;
+            desactivarEdicion();
+        }
+
+        function activarEdicion() {
+            document.body.classList.add('editable-mode');
+            document.getElementById('status-indicator').classList.add('active');
+            document.getElementById('admin-status-text').innerText = "Modo Edición (nanogout)";
+            document.getElementById('btn-login-modal').style.display = "none";
+            document.getElementById('btn-save').style.display = "inline-flex";
+            document.getElementById('btn-logout').style.display = "inline-flex";
+            document.getElementById('editor-controls').style.display = "flex";
+            renderizarPagina();
+        }
+
+        function desactivarEdicion() {
+            document.body.classList.remove('editable-mode');
+            document.getElementById('status-indicator').classList.remove('active');
+            document.getElementById('admin-status-text').innerText = "Modo Lectura (Público)";
+            document.getElementById('btn-login-modal').style.display = "inline-flex";
+            document.getElementById('btn-save').style.display = "none";
+            document.getElementById('btn-logout').style.display = "none";
+            document.getElementById('editor-controls').style.display = "none";
+            renderizarPagina();
+        }
+
+        // Renderizado
+        function renderizarPagina() {
+            const wrapper = document.getElementById('sections-wrapper');
+            wrapper.innerHTML = "";
+
+            const totalPages = Math.ceil(siteData.sections.length / MAX_SECTIONS_PER_PAGE) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const start = (currentPage - 1) * MAX_SECTIONS_PER_PAGE;
+            const end = start + MAX_SECTIONS_PER_PAGE;
+            const sectionsToDisplay = siteData.sections.slice(start, end);
+
+            sectionsToDisplay.forEach((sec, idx) => {
+                const globalIndex = start + idx;
+                const div = document.createElement('div');
+                div.className = 'section-block';
+                div.innerHTML = `
+                    <h2 class="section-title ${adminState ? 'editable' : ''}" onblur="actualizarTextoSection(${globalIndex}, 'title', this.innerText)">${sec.title}</h2>
+                    <p class="${adminState ? 'editable' : ''}" onblur="actualizarTextoSection(${globalIndex}, 'text', this.innerText)">${sec.text}</p>
+                    
+                    <div class="grid-container" id="grid-${sec.id}"></div>
+
+                    <div class="section-actions">
+                        <button class="btn-admin" onclick="agregarTarjeta(${globalIndex})"><i class="fa-solid fa-plus"></i> Añadir Tarjeta</button>
+                        <button class="btn-admin" onclick="prepararSubida(${globalIndex})"><i class="fa-solid fa-image"></i> Subir Foto</button>
+                        <button class="btn-admin" onclick="abrirModalLink(${globalIndex})"><i class="fa-solid fa-link"></i> Añadir Link</button>
+                        <button class="btn-admin btn-danger" onclick="eliminarSeccion(${globalIndex})"><i class="fa-solid fa-trash"></i> Eliminar Sección</button>
+                    </div>
+                `;
+
+                wrapper.appendChild(div);
+
+                const grid = div.querySelector(`#grid-${sec.id}`);
+                sec.items.forEach((item, itemIdx) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    if (item.type === 'card') {
+                        card.innerHTML = `
+                            <h3 class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'title', this.innerText)">${item.title}</h3>
+                            <p class="${adminState ? 'editable' : ''}" onblur="actualizarItem(${globalIndex}, ${itemIdx}, 'text', this.innerText)">${item.text}</p>
+                            <div class="card-actions">
+                                <button class="btn-admin btn-danger" onclick="eliminarItem(${globalIndex}, ${itemIdx})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    } else if (item.type === 'foto') {
+                        card.innerHTML = `
+                            <img src="${item.url}" alt="Foto Subida">
+                            <div class="card-actions">
+                                <button class="btn-admin btn-danger" onclick="eliminarItem(${globalIndex}, ${itemIdx})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    } else if (item.type === 'link') {
+                        card.innerHTML = `
+                            <i class="fa-solid fa-globe" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                            <h4>${item.text}</h4>
+                            <a href="${item.url}" target="_blank" class="card-link"><i class="fa-solid fa-up-right-from-square"></i> Abrir Enlace</a>
+                            <div class="card-actions">
+                                <button class="btn-admin btn-danger" onclick="eliminarItem(${globalIndex}, ${itemIdx})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                    }
+                    grid.appendChild(card);
+                });
+            });
+
+            document.getElementById('page-info-top').innerText = `Página ${currentPage} de ${totalPages}`;
+            document.getElementById('page-info-bottom').innerText = `Página ${currentPage} de ${totalPages}`;
+            document.getElementById('prev-btn-top').disabled = currentPage === 1;
+            document.getElementById('next-btn-top').disabled = currentPage >= totalPages;
+            document.getElementById('prev-btn-bottom').disabled = currentPage === 1;
+            document.getElementById('next-btn-bottom').disabled = currentPage >= totalPages;
+
+            if (adminState) {
+                document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+            }
+        }
+
+        function cambiarPagina(delta) {
+            currentPage += delta;
+            renderizarPagina();
+        }
+
+        // Acciones de Administración
+        function crearNuevaSeccion() {
+            siteData.sections.push({
+                id: "sec-" + Date.now(),
+                title: "Nueva Sección",
+                text: "Escribe una descripción.",
+                items: []
+            });
+            renderizarPagina();
+            actualizarMetricasAdmin();
+        }
+
+        function eliminarSeccion(index) {
+            if (confirm("ADVERTENCIA: ¿Eliminar esta sección y todo su contenido?")) {
+                siteData.sections.splice(index, 1);
+                renderizarPagina();
+                actualizarMetricasAdmin();
+            }
+        }
+
+        function agregarTarjeta(secIdx) {
+            siteData.sections[secIdx].items.push({ type: 'card', title: 'Nuevo Título', text: 'Descripción del elemento.' });
+            renderizarPagina();
+            actualizarMetricasAdmin();
+        }
+
+        function prepararSubida(secIdx) {
+            currentUploadTarget = secIdx;
+            document.getElementById('file-uploader').click();
+        }
+
+        function procesarArchivoSubido(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                siteData.sections[currentUploadTarget].items.push({ type: 'foto', url: evt.target.result });
+                renderizarPagina();
+                actualizarMetricasAdmin();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Links
+        function abrirModalLink(secIdx) {
+            currentLinkTarget = secIdx;
+            document.getElementById('link-modal').style.display = 'flex';
+        }
+        function cerrarModalLink() { document.getElementById('link-modal').style.display = 'none'; }
+        function guardarLink() {
+            const text = document.getElementById('link-text').value.trim();
+            const url = document.getElementById('link-url').value.trim();
+            if (text && url) {
+                siteData.sections[currentLinkTarget].items.push({ type: 'link', text: text, url: url });
+                cerrarModalLink();
+                renderizarPagina();
+                actualizarMetricasAdmin();
+            }
+        }
+
+        // Dominio
+        function abrirModalDominio() { document.getElementById('domain-modal').style.display = 'flex'; }
+        function cerrarModalDominio() { document.getElementById('domain-modal').style.display = 'none'; }
+        function guardarNuevoDominio() {
+            const newDom = document.getElementById('new-domain-input').value.trim();
+            if (newDom) {
+                siteData.domain = newDom;
+                document.getElementById('display-domain').innerText = newDom;
+                cerrarModalDominio();
+                guardarTodoSilencioso();
+                alert("Dominio web actualizado correctamente.");
+            }
+        }
+
+        function actualizarTextoSection(index, field, val) { if (siteData.sections[index]) siteData.sections[index][field] = val; }
+        function actualizarItem(secIdx, itemIdx, field, val) { if (siteData.sections[secIdx].items[itemIdx]) siteData.sections[secIdx].items[itemIdx][field] = val; }
+        function eliminarItem(secIdx, itemIdx) {
+            siteData.sections[secIdx].items.splice(itemIdx, 1);
+            renderizarPagina();
+            actualizarMetricasAdmin();
+        }
+
+        // Comentarios
+        function publicarComentario(e) {
+            e.preventDefault();
+            const author = document.getElementById('comm-author').value.trim();
+            const text = document.getElementById('comm-text').value.trim();
+            const photoInput = document.getElementById('comm-photo');
+
+            if (author && text) {
+                const commentObj = {
+                    id: "comm-" + Date.now(),
+                    author: author,
+                    text: text,
+                    date: new Date().toLocaleString(),
+                    photo: null,
+                    likes: 0
+                };
+
+                if (photoInput.files && photoInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        commentObj.photo = evt.target.result;
+                        guardarComentario(commentObj);
+                    };
+                    reader.readAsDataURL(photoInput.files[0]);
+                } else {
+                    guardarComentario(commentObj);
+                }
+            }
+        }
+
+        function guardarComentario(commentObj) {
+            siteData.comments.unshift(commentObj);
+            document.getElementById('comm-author').value = '';
+            document.getElementById('comm-text').value = '';
+            document.getElementById('comm-photo').value = '';
+            renderizarComentarios();
+            guardarTodoSilencioso();
+        }
+
+        function renderizarComentarios() {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = '';
+
+            const totalPages = Math.ceil(siteData.comments.length / MAX_COMMENTS_PER_PAGE) || 1;
+            if (currentCommentPage > totalPages) currentCommentPage = totalPages;
+
+            const start = (currentCommentPage - 1) * MAX_COMMENTS_PER_PAGE;
+            const end = start + MAX_COMMENTS_PER_PAGE;
+            const list = siteData.comments.slice(start, end);
+
+            list.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'comment-item';
+                div.innerHTML = `
+                    <strong><i class="fa-solid fa-user"></i> ${c.author}</strong> <small style="color: var(--text-muted);">(${c.date})</small>
+                    <p style="margin-top: 4px;">${c.text}</p>
+                    ${c.photo ? `<img src="${c.photo}" class="comment-media" alt="Foto adjunta">` : ''}
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('comm-page-info').innerText = `Comentarios: Página ${currentCommentPage} de ${totalPages}`;
+            document.getElementById('comm-prev-btn').disabled = currentCommentPage === 1;
+            document.getElementById('comm-next-btn').disabled = currentCommentPage >= totalPages;
+        }
+
+        function cambiarPaginaComentarios(delta) {
+            currentCommentPage += delta;
+            renderizarComentarios();
+        }
+
+        function actualizarMetricasAdmin() {
+            let total = 0;
+            siteData.sections.forEach(s => total += s.items.length);
+            document.getElementById('total-items-count').innerText = total;
+        }
+
+        function guardarTodo() {
+            localStorage.setItem('coartacna_site_v5', JSON.stringify(siteData));
+            alert("Los cambios han sido guardados exitosamente.");
+        }
+
+        function guardarTodoSilencioso() {
+            localStorage.setItem('coartacna_site_v5', JSON.stringify(siteData));
+        }
+
+        function restaurarPorDefecto() {
+            if (confirm("¿Restaurar el sitio a su estado predeterminado?")) {
+                localStorage.removeItem('coartacna_site_v5');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
